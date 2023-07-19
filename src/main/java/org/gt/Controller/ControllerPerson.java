@@ -2,17 +2,17 @@ package org.gt.Controller;
 
 
 import jakarta.inject.Inject;
-import jakarta.json.Json;
+
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.gt.DTO.PersonDTO;
-import org.gt.Entity.PersonEntity;
+
 import org.gt.Service.PersonService;
 
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Path("/person")
 @Consumes(MediaType.APPLICATION_JSON)

@@ -8,7 +8,6 @@ import org.gt.DTO.PersonDTO;
 import org.gt.Entity.PersonEntity;
 import org.gt.Repository.PersonRepository;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 @ApplicationScoped
