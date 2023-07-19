@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import org.gt.DTO.PersonDTO;
 import org.gt.Entity.PersonEntity;
 
 import java.util.List;
@@ -26,5 +27,12 @@ public class PersonRepository{
     @Transactional
     public void deletePersona(Long id) {
         PersonEntity.deleteById(id);
+    }
+    @Transactional
+    public void updatePerson(PersonEntity personEntity,PersonDTO personDTO) {
+        personEntity.setName(personDTO.getName());
+        personEntity.setPhone(personDTO.getPhone());
+        personEntity.setDirection(personDTO.getDirection());
+        personEntity.setDate(personDTO.getDate());
     }
 }

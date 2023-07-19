@@ -49,12 +49,21 @@ public class ControllerPerson {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
     @DELETE
-    @Path("deletePerson/{id}")
+    @Path("/deletePerson/{id}")
     public Response deletePerson(@PathParam("id") Long id) {
         if(personService.deletePersona(id)){
             return Response.status(Response.Status.OK).entity("Deleted person").build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
     }
+    @PUT
+    @Path("/updatePerson/{id}")
+    public Response updatePersona(@PathParam("id") Long id,PersonDTO personDTO) {
+        if(personService.updatePerson(id,personDTO)){
+            return Response.status(Response.Status.OK).entity("Update person").build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
+    }
+
 
 }

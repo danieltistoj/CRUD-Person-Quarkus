@@ -67,6 +67,15 @@ public class PersonService {
         }
         return false;
     }
+    @Transactional
+    public boolean updatePerson(long id,PersonDTO personDTO) {
+        PersonEntity personEntity = personRepository.findById(id);
+        if(personEntity!=null){
+            personRepository.updatePerson(personEntity,personDTO);
+            return true;
+        }
+        return false;
+    }
     private PersonDTO convertEntityToEdo(PersonEntity personEntity){
         PersonDTO personDTO = new PersonDTO();
         personDTO.setName(personEntity.getName());
