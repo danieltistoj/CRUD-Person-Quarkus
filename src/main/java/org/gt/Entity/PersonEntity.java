@@ -1,13 +1,20 @@
-package org.gt.DTO;
+package org.gt.Entity;
 
-public class PersonDTO {
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name="Person")
+public class PersonEntity extends PanacheEntity{
+
     private String name;
     private String date;
 
     private String direction;
-
+    @Column(length = 100)
     private String phone;
-
+    @Column(length = 100)
     public String getName() {
         return name;
     }
