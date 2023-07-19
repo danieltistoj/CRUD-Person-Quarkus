@@ -8,6 +8,8 @@ import org.gt.DTO.PersonDTO;
 import org.gt.Entity.PersonEntity;
 import org.gt.Repository.PersonRepository;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 @ApplicationScoped
 public class PersonService {
@@ -39,11 +41,30 @@ public class PersonService {
         // Logic to delete the person from the database
     }
 
-    public PersonDTO findPersonById(Long id) {
+    public List<PersonDTO> findAllPerson() {
+        List<PersonEntity> personEntityList = personRepository.allPerson();
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        for(PersonEntity person:personEntityList){
+
+            personDTOList.add(convertEntityToEdo(person));
+        }
+        return personDTOList;
+    }
+    public PersonDTO findPersonById(long id){
+        PersonEntity personEntity = personRepository.findById(id);
+
+        if(personEntity!=null){
+
+            return convertEntityToEdo(personEntity);
+        }
         return null;
     }
-
-    public List<PersonDTO> findAllPerson() {
-        return null;
+    private PersonDTO convertEntityToEdo(PersonEntity personEntity){
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setName(personEntity.getName());
+        personDTO.setDate(personEntity.getDate());
+        personDTO.setPhone(personEntity.getPhone());
+        personDTO.setDirection(personEntity.getDirection());
+        return personDTO;
     }
 }
