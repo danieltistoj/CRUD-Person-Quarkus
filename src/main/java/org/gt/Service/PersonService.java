@@ -59,6 +59,14 @@ public class PersonService {
         }
         return null;
     }
+    @Transactional
+    public boolean deletePersona(Long id) {
+        if(personRepository.findById(id)!=null){
+            personRepository.deletePersona(id);
+            return true;
+        }
+        return false;
+    }
     private PersonDTO convertEntityToEdo(PersonEntity personEntity){
         PersonDTO personDTO = new PersonDTO();
         personDTO.setName(personEntity.getName());

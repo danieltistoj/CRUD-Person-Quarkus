@@ -23,4 +23,8 @@ public class PersonRepository{
     public PersonEntity findById(Long id){
         return PersonEntity.findById(id);
     }
+    @Transactional
+    public void deletePersona(Long id) {
+        PersonEntity.deleteById(id);
+    }
 }
