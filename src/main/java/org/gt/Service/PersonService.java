@@ -1,6 +1,6 @@
 package org.gt.Service;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -11,17 +11,18 @@ import org.gt.Repository.PersonRepository;
 import java.util.List;
 @ApplicationScoped
 public class PersonService {
-
+    @Inject
+    private PersonRepository personRepository;
     @Transactional
     public  boolean savePerson(PersonDTO person) {
        PersonEntity newPerson = new PersonEntity();
-        if(PersonRepository.findByName(person.getName())==null){
+        if(personRepository.findByName(person.getName())==null){
             newPerson.setName(person.getName());
             newPerson.setDate(person.getDate());
             newPerson.setDirection(person.getDirection());
             newPerson.setPhone(person.getPhone());
 
-            PersonRepository.createPerson(newPerson);
+            personRepository.createPerson(newPerson);
             return true;
         }
 
