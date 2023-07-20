@@ -29,9 +29,7 @@ public class UserService {
     @Transactional
     public boolean authenticateUser(UserDTO userDTO){
         UserEntity userEntity = userRepository.findByName(userDTO.getUser_name());
-        System.out.println("Entro");
         if(userEntity!=null && passwordService.verifyPassword(userDTO.getPassword(),userEntity.getPassword())){
-            System.out.println("Entro 2");
             return true;
         }
         return false;
