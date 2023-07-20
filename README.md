@@ -1,5 +1,5 @@
 <div>
-  <h1>User API Endpoint Documentation</h1>
+  <h1>Person and User API Endpoint Documentation</h1>
 
   <h2>Endpoint: <span style="color: blue;">GET</span> one person by id</h2>
   <p>Retrieves information about a specific person by their ID.</p>
