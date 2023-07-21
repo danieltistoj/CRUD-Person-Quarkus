@@ -1,0 +1,1 @@
+INSERT INTO pet (id,name, race, age) VALUES (1,'Max', 'Labrador Retriever', 3);
