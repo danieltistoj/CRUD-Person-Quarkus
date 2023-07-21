@@ -1,8 +1,6 @@
 # API Documentation
 
-# Índice
-
-# Índice
+# Index
 
 - [Person Endpoints](#person-endpoints)
     - [Get One Person by ID](#get-one-person-by-id)
