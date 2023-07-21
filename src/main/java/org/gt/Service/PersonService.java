@@ -30,16 +30,6 @@ public class PersonService {
        return false;
     }
 
-    @Transactional
-    public void updatePerson(PersonDTO person) {
-        // Logic to update the person in the database
-    }
-
-    @Transactional
-    public void deletePerson(Long id) {
-        // Logic to delete the person from the database
-    }
-
     public List<PersonDTO> findAllPerson() {
         List<PersonEntity> personEntityList = personRepository.allPerson();
         List<PersonDTO> personDTOList = new ArrayList<>();
