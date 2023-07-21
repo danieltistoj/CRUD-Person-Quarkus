@@ -1,138 +1,175 @@
-<div>
-  <h1>Person and User API Endpoint Documentation</h1>
+# API Documentation
 
-  <h2>Endpoint: <span style="color: blue;">GET</span> one person by id</h2>
-  <p>Retrieves information about a specific person by their ID.</p>
-  <h3>Request</h3>
-  <pre><code><span style="color: green;">GET</span> http://localhost:8080/person/OnePersonById/52</code></pre>
-  <p>Description: Gets information about the authenticated user.</p>
+# Índice
 
-  <h3>Response</h3>
-  <p><strong>Successful Response:</strong></p>
-  <pre><code>Status: 200 OK
-Content-Type: application/json
+## [Person Endpoints](#person-endpoints)
+- [Get One Person by ID](#get-one-person-by-id)
+- [Add New Person](#add-new-person)
+- [Update Person](#update-person)
+- [Get All Persons](#get-all-persons)
+- [Delete Person](#delete-person)
 
+## [Pet Endpoints](#pet-endpoints)
+- [Get One Pet by ID](#get-one-pet-by-id)
+- [Add New Pet](#add-new-pet)
+- [Update Pet](#update-pet)
+- [Get All Pets](#get-all-pets)
+- [Delete Pet](#delete-pet)
+
+## [User Endpoints](#user-endpoints)
+- [Sign In](#sign-in)
+- [Log In](#log-in)
+
+## [Running the application in dev mode](#running-the-application-in-dev-mode)
+
+## [Packaging and running the application](#packaging-and-running-the-application)
+
+## [Creating a native executable](#creating-a-native-executable)
+
+## [Related Guides](#related-guides)
+- [RESTEasy Reactive](#resteasy-reactive)
+- [Hibernate ORM with Panache](#hibernate-orm-with-panache)
+- [Agroal - Database connection pool](#agroal-database-connection-pool)
+- [JDBC Driver - PostgreSQL](#jdbc-driver-postgresql)
+
+## [Provided Code](#provided-code)
+- [Hibernate ORM](#hibernate-orm)
+- [RESTEasy Reactive](#resteasy-reactive)
+
+---
+
+## Person Endpoints
+
+### Get One Person by ID
+
+- **URL**: `http://localhost:8080/person/OnePersonById/{{id}}`
+- **Method**: GET
+- **Description**: Gets information about a specific person by their ID.
+
+### Add New Person
+
+- **URL**: `http://localhost:8080/person/newPerson`
+- **Method**: POST
+- **Description**: Creates a new person with the provided details.
+- **Body**:
+```json
+{    
+    "name": "Juan",
+    "date": "2000-01-2",
+    "direction": "Avenida 5",
+    "phone": "777777"
+}
+```
+
+### Update Person
+
+- **URL**: `http://localhost:8080/person/updatePerson/{{id}}`
+- **Method**: PUT
+- **Description**: Updates the information of an existing person based on their ID.
+- **Body**:
+```json
+ {      
+        "name": "Pablo",
+        "date": "2000-01-2",
+        "direction": "Avenida 5",
+        "phone": "777777"
+    }   
+```
+### Get All Persons
+
+- **URL**: `http://localhost:8080/person/getAll`
+- **Method**: GET
+- **Description**: Retrieves information about all available persons.
+
+### Delete Person
+
+- **URL**: `http://localhost:8080/person/deletePerson/{{id}}`
+- **Method**: DELETE
+- **Description**: Deletes a person with the specified ID.
+
+## Pet Endpoints
+
+### Get One Pet by ID
+
+- **URL**: `http://localhost:8080/pet/OnePetById/{{id}}`
+- **Method**: GET
+- **Description**: Gets information about a specific pet by their ID.
+
+### Add New Pet
+
+- **URL**: `http://localhost:8080/pet/newPet`
+- **Method**: POST
+- **Description**: Adds a new pet with the provided details.
+- **Body**:
+```json
+{   
+    "name": "rocky",
+    "race": "pitbull",
+    "age": 5
+
+}
+```
+
+### Update Pet
+
+- **URL**: `http://localhost:8080/pet/updatePet/{{id}}`
+- **Method**: PUT
+- **Description**: Updates the information of an existing pet based on their ID.
+- **Body**:
+```json    
+ {      
+    "name": "max 1",
+    "race": "pastor alemean",
+    "age": 10
+ }    
+```
+
+### Get All Pets
+
+- **URL**: `http://localhost:8080/pet/getAll`
+- **Method**: GET
+- **Description**: Retrieves information about all available pets.
+
+### Delete Pet
+
+- **URL**: `http://localhost:8080/pet/deletePet/{{id}}`
+- **Method**: DELETE
+- **Description**: Deletes a pet with the specified ID.
+
+## User Endpoints
+
+### Sign In
+
+- **URL**: `http://localhost:8080/user/SignIn`
+- **Method**: POST
+- **Description**: Signs in the user with the provided credentials.
+- **Body**:
+
+```json
 {
-  "user": {
-    "id": 12345678,
-    "username": "taylor-lee",
-    "email": "taylor.lee@example.com",
-    "fullName": "Taylor Lee",
-    "avatar": "https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg",
-    "isPublic": true
-  },
-  "operations": [
-    {
-      "name": "mock_usage",
-      "limit": 1000000,
-      "usage": 110276,
-      "overage": 0
-    },
-    {
-      "name": "monitor_request_runs",
-      "limit": 10000000,
-      "usage": 1141750,
-      "overage": 0
-    },
-    {
-      "name": "api_usage",
-      "limit": 1000000,
-      "usage": 16240,
-      "overage": 0
-    },
-    {
-      "name": "custom_domains",
-      "limit": 25,
-      "usage": 25,
-      "overage": 0
-    },
-    {
-      "name": "serverless_requests",
-      "limit": 10000,
-      "usage": 0,
-      "overage": 0
-    },
-    {
-      "name": "integrations",
-      "limit": 5000,
-      "usage": 1018,
-      "overage": 0
-    },
-    {
-      "name": "cloud_agent_requests",
-      "limit": 1000000,
-      "usage": 1615,
-      "overage": 0
-    }
-  ]
-}</code></pre>
+    "user_name": "jose",
+    "password": "1234"
+}
+```
 
-  <p><strong>Rate Limit Exceeded Response:</strong></p>
-  <pre><code>Status: 429 Too Many Requests
-Content-Type: application/json
+### Log In
 
+- **URL**: `http://localhost:8080/user/LogIn`
+- **Method**: POST
+- **Description**: Logs in the user with the provided credentials.
+- **Body**:
+
+```json
 {
-  "error": "rateLimited",
-  "message": "Rate limit exceeded. Please retry after 1669048687"
-}</code></pre>
+    "user_name": "jose",
+    "password": "1234"
+}
+```
 
-
-  <h2>Endpoint: <span style="color: blue;">POST</span> new person</h2>
-  <p>Creates a new person.</p>
-  <h3>Request</h3>
-  <pre><code><span style="color: green;">POST</span> http://localhost:8080/person/newPerson</code></pre>
-  <p>Description: Provide the person information in the request body.</p>
-  <p>Request Body:</p>
-  <pre><code>{
-    "name": "María",
-    "date": "1998-02-02",
-    "direction": "Avenida 2",
-    "phone": "2222222"
-}</code></pre>
-
-  <h3>Response</h3>
-  <p>No response specified.</p>
-
-
-  <h2>Endpoint: <span style="color: blue;">PUT</span> update person</h2>
-  <p>Updates information about a person.</p>
-  <h3>Request</h3>
-  <pre><code><span style="color: green;">PUT</span> http://localhost:8080/person/updatePerson/1</code></pre>
-  <p>Description: Provide the updated person information in the request body.</p>
-  <p>Request Body:</p>
-  <pre><code>{
-    "name": "juan luis",
-    "date": "1999-04-22",
-    "direction": "calle 3",
-    "phone": "7777888"
-}</code></pre>
-
-  <h3>Response</h3>
-  <p>No response specified.</p>
-
-
-  <h2>Endpoint: <span style="color: blue;">GET</span> all person</h2>
-  <p>Retrieves information about all persons.</p>
-  <h3>Request</h3>
-  <pre><code><span style="color: green;">GET</span> http://localhost:8080/person/getAll</code></pre>
-
-  <h3>Response</h3>
-  <p>No response specified.</p>
-
-
-  <h2>Endpoint: <span style="color: blue;">DELETE</span> all person Copy</h2>
-  <p>Deletes a person.</p>
-  <h3>Request</h3>
-  <pre><code><span style="color: green;">DELETE</span> http://localhost:8080/person/deletePerson/101</code></pre>
-
-  <h3>Response</h3>
-  <p>No response specified.</p>
-
-</div>
 
 # code-with-quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus, the Supersonic Subatomic Java Framework, and was developed using JDK 17 of Java.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
