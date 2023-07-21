@@ -2,39 +2,42 @@
 
 # Índice
 
-## [Person Endpoints](#person-endpoints)
-- [Get One Person by ID](#get-one-person-by-id)
-- [Add New Person](#add-new-person)
-- [Update Person](#update-person)
-- [Get All Persons](#get-all-persons)
-- [Delete Person](#delete-person)
+# Índice
 
-## [Pet Endpoints](#pet-endpoints)
-- [Get One Pet by ID](#get-one-pet-by-id)
-- [Add New Pet](#add-new-pet)
-- [Update Pet](#update-pet)
-- [Get All Pets](#get-all-pets)
-- [Delete Pet](#delete-pet)
+- [Person Endpoints](#person-endpoints)
+    - [Get One Person by ID](#get-one-person-by-id)
+    - [Add New Person](#add-new-person)
+    - [Update Person](#update-person)
+    - [Get All Persons](#get-all-persons)
+    - [Delete Person](#delete-person)
 
-## [User Endpoints](#user-endpoints)
-- [Sign In](#sign-in)
-- [Log In](#log-in)
+- [Pet Endpoints](#pet-endpoints)
+    - [Get One Pet by ID](#get-one-pet-by-id)
+    - [Add New Pet](#add-new-pet)
+    - [Update Pet](#update-pet)
+    - [Get All Pets](#get-all-pets)
+    - [Delete Pet](#delete-pet)
 
-## [Running the application in dev mode](#running-the-application-in-dev-mode)
+- [User Endpoints](#user-endpoints)
+    - [Sign In](#sign-in)
+    - [Log In](#log-in)
 
-## [Packaging and running the application](#packaging-and-running-the-application)
+- [Running the application in dev mode](#running-the-application-in-dev-mode)
 
-## [Creating a native executable](#creating-a-native-executable)
+- [Packaging and running the application](#packaging-and-running-the-application)
 
-## [Related Guides](#related-guides)
-- [RESTEasy Reactive](#resteasy-reactive)
-- [Hibernate ORM with Panache](#hibernate-orm-with-panache)
-- [Agroal - Database connection pool](#agroal-database-connection-pool)
-- [JDBC Driver - PostgreSQL](#jdbc-driver-postgresql)
+- [Creating a native executable](#creating-a-native-executable)
 
-## [Provided Code](#provided-code)
-- [Hibernate ORM](#hibernate-orm)
-- [RESTEasy Reactive](#resteasy-reactive)
+- [Related Guides](#related-guides)
+    - [RESTEasy Reactive](#resteasy-reactive)
+    - [Hibernate ORM with Panache](#hibernate-orm-with-panache)
+    - [Agroal - Database connection pool](#agroal-database-connection-pool)
+    - [JDBC Driver - PostgreSQL](#jdbc-driver-postgresql)
+    
+
+- [Provided Code](#provided-code)
+    - [Hibernate ORM](#hibernate-orm)
+    - [RESTEasy Reactive](#resteasy-reactive)
 
 ---
 
