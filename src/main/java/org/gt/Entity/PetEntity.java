@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 public class PetEntity  extends PanacheEntity {
     private String name;
     private String race;
-    private int ege;
+    private int age;
 
     public String getName() {
         return name;
@@ -27,11 +27,11 @@ public class PetEntity  extends PanacheEntity {
         this.race = race;
     }
 
-    public int getEge() {
-        return ege;
+    public int getAge() {
+        return age;
     }
 
-    public void setEge(int ege) {
-        this.ege = ege;
+    public void setAge(int age) {
+        this.age = age;
     }
 }
