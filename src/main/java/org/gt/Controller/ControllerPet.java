@@ -5,7 +5,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.gt.DTO.PetDTO;
 
 import org.gt.Entity.PetEntity;
 import org.gt.Service.PetService;
@@ -25,8 +24,9 @@ public class ControllerPet {
     }
     @POST
     @Path("/newPet")
-    public Response newPet(PetDTO pet) {
-        if( petService.savePet(pet)){
+    public Response newPet(PetEntity petEntity) {
+        if( petService.findPetByName(petEntity.getName())==null){
+            petService.savePet(petEntity);
             return Response.status(Response.Status.CREATED).entity("Pet created successfully").build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet already exists").build();

@@ -9,10 +9,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class PetRepository implements PanacheRepository<PetEntity> {
-    @Transactional
-    public   void createPet(PetEntity pet){
-        persist(pet);
-    }
+
     public  PetEntity findByName(String name){
         return find("name",name).firstResult();
     }

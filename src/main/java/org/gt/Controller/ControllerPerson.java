@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.gt.DTO.PersonDTO;
+
 
 import org.gt.Entity.PersonEntity;
 import org.gt.Service.PersonService;

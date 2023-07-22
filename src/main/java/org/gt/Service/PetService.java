@@ -17,18 +17,8 @@ public class PetService {
     @Inject
     private PetRepository petRepository;
     @Transactional
-    public  boolean savePet(PetDTO pet) {
-        PetEntity newPet = new PetEntity();
-        if(petRepository.findByName(pet.getName())==null){
-            newPet.setName(pet.getName());
-            newPet.setRace(pet.getRace());
-            newPet.setAge(pet.getAge());
-
-            petRepository.createPet(newPet);
-            return true;
-        }
-
-        return false;
+    public  void savePet(PetEntity pet) {
+        petRepository.persist(pet);
     }
 
     public List<PetEntity> findAllPet() {
