@@ -1,13 +1,17 @@
 package org.gt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
 
 @Entity
 @Table(name="Person")
-public class PersonEntity extends PanacheEntity{
-
+public class PersonEntity{
+    @Id
+    @GeneratedValue
+    @JsonIgnore
+    private Long id;
     private String name;
     private String date;
 

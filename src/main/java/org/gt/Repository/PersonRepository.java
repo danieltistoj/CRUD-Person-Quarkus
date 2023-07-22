@@ -1,6 +1,7 @@
 package org.gt.Repository;
 
 
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import org.gt.DTO.PersonDTO;
@@ -9,29 +10,19 @@ import org.gt.Entity.PersonEntity;
 import java.util.List;
 
 @ApplicationScoped
-public class PersonRepository{
+public class PersonRepository implements PanacheRepository <PersonEntity>{
     @Transactional
     public   void createPerson(PersonEntity person){
-        PersonEntity.persist(person);
+        persist(person);
     }
     public  PersonEntity findByName(String name){
-        return PersonEntity.find("name",name).firstResult();
-    }
-    public List<PersonEntity> allPerson() {
-        return PersonEntity.listAll();
-    }
-    public PersonEntity findById(Long id){
-        return PersonEntity.findById(id);
+        return find("name",name).firstResult();
     }
     @Transactional
-    public void deletePersona(Long id) {
-        PersonEntity.deleteById(id);
-    }
-    @Transactional
-    public void updatePerson(PersonEntity personEntity,PersonDTO personDTO) {
-        personEntity.setName(personDTO.getName());
-        personEntity.setPhone(personDTO.getPhone());
-        personEntity.setDirection(personDTO.getDirection());
-        personEntity.setDate(personDTO.getDate());
+    public void updatePerson(PersonEntity updatePersonEntity,PersonEntity personEntity) {
+        updatePersonEntity.setName(personEntity.getName());
+        updatePersonEntity.setPhone(personEntity.getPhone());
+        updatePersonEntity.setDirection(personEntity.getDirection());
+        updatePersonEntity.setDate(personEntity.getDate());
     }
 }

@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.gt.DTO.PersonDTO;
 
+import org.gt.Entity.PersonEntity;
 import org.gt.Service.PersonService;
 
 import jakarta.ws.rs.core.Response;
@@ -27,7 +28,7 @@ public class ControllerPerson {
     }
     @POST
     @Path("/newPerson")
-    public Response newPerson(PersonDTO person) {
+    public Response newPerson(PersonEntity person) {
         if( personService.savePerson(person)){
          return Response.status(Response.Status.CREATED).entity("Person created successfully").build();
         }
@@ -35,16 +36,15 @@ public class ControllerPerson {
     }
     @GET
     @Path("/getAll")
-    public List<PersonDTO> allPerson(){
+    public List<PersonEntity> allPerson(){
         return personService.findAllPerson();
     }
     @GET
     @Path("/OnePersonById/{id}")
     public Response onePersonById(@PathParam("id") Long id){
-
-        PersonDTO personDTO = personService.findPersonById(id);
-        if(personDTO!=null){
-            return Response.ok(personDTO).build();
+        PersonEntity personEntity = personService.findPersonById(id);
+        if(personEntity!=null){
+            return Response.ok(personEntity).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
@@ -58,8 +58,8 @@ public class ControllerPerson {
     }
     @PUT
     @Path("/updatePerson/{id}")
-    public Response updatePersona(@PathParam("id") Long id,PersonDTO personDTO) {
-        if(personService.updatePerson(id,personDTO)){
+    public Response updatePersona(@PathParam("id") Long id,PersonEntity personEntity) {
+        if(personService.updatePerson(id,personEntity)){
             return Response.status(Response.Status.OK).entity("Update person").build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();

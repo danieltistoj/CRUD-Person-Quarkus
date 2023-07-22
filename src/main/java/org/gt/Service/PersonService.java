@@ -15,62 +15,49 @@ public class PersonService {
     @Inject
     private PersonRepository personRepository;
     @Transactional
-    public  boolean savePerson(PersonDTO person) {
-       PersonEntity newPerson = new PersonEntity();
-        if(personRepository.findByName(person.getName())==null){
-            newPerson.setName(person.getName());
-            newPerson.setDate(person.getDate());
-            newPerson.setDirection(person.getDirection());
-            newPerson.setPhone(person.getPhone());
+    public  boolean savePerson(PersonEntity person) {
 
-            personRepository.createPerson(newPerson);
+        if(personRepository.findByName(person.getName())==null){
+            personRepository.createPerson(person);
             return true;
         }
 
        return false;
     }
 
-    public List<PersonDTO> findAllPerson() {
-        List<PersonEntity> personEntityList = personRepository.allPerson();
-        List<PersonDTO> personDTOList = new ArrayList<>();
-        for(PersonEntity person:personEntityList){
-
-            personDTOList.add(convertEntityToEdo(person));
-        }
-        return personDTOList;
+    public List<PersonEntity> findAllPerson() {
+        return personRepository.listAll();
     }
-    public PersonDTO findPersonById(long id){
-        PersonEntity personEntity = personRepository.findById(id);
-
-        if(personEntity!=null){
-
-            return convertEntityToEdo(personEntity);
-        }
-        return null;
+    public PersonEntity findPersonById(long id){
+       return personRepository.findById(id);
     }
     @Transactional
     public boolean deletePersona(Long id) {
         if(personRepository.findById(id)!=null){
-            personRepository.deletePersona(id);
+            personRepository.deleteById(id);
             return true;
         }
         return false;
     }
     @Transactional
-    public boolean updatePerson(long id,PersonDTO personDTO) {
-        PersonEntity personEntity = personRepository.findById(id);
+    public boolean updatePerson(long id,PersonEntity personEntity) {
+        PersonEntity updatePersonEntity = personRepository.findById(id);
         if(personEntity!=null){
-            personRepository.updatePerson(personEntity,personDTO);
+            if(personEntity.getName()!=null){
+                updatePersonEntity.setName(personEntity.getName());
+            }
+            if(personEntity.getDate()!=null){
+                updatePersonEntity.setDate(personEntity.getDate());
+            }
+            if(personEntity.getDirection()!=null){
+                updatePersonEntity.setDirection(personEntity.getDirection());
+            }
+            if(personEntity.getPhone()!=null){
+                updatePersonEntity.setPhone(personEntity.getPhone());
+            }
             return true;
         }
         return false;
     }
-    private PersonDTO convertEntityToEdo(PersonEntity personEntity){
-        PersonDTO personDTO = new PersonDTO();
-        personDTO.setName(personEntity.getName());
-        personDTO.setDate(personEntity.getDate());
-        personDTO.setPhone(personEntity.getPhone());
-        personDTO.setDirection(personEntity.getDirection());
-        return personDTO;
-    }
+
 }
