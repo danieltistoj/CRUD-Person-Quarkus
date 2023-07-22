@@ -67,9 +67,9 @@ public class UserService {
             }
         }
         if(userEntity.getRole()!=null){
-            System.out.println(userEntity.getRole());
+
             updateUserEntity.setRole(userEntity.getRole());
-            System.out.println(updateUserEntity.getRole());
+
         }
         return "user update successfully";
     }
