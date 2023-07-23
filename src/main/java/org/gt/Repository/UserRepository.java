@@ -1,16 +1,18 @@
 package org.gt.Repository;
 
+import io.vertx.ext.auth.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
-import org.gt.Entity.PersonEntity;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import org.gt.Entity.UserEntity;
 @ApplicationScoped
-public class UserRepository {
-    @Transactional
-    public   void createUser(UserEntity user){
-        UserEntity.persist(user);
-    }
+public class UserRepository implements PanacheRepository<UserEntity>{
+
     public UserEntity findByName(String name){
-        return UserEntity.find("user_name",name).firstResult();
+        return find("username",name).firstResult();
     }
+    public UserEntity findByEmail(String email){
+        return find("email",email).firstResult();
+    }
+
 }

@@ -6,70 +6,83 @@ import jakarta.transaction.Transactional;
 
 import org.gt.DTO.PetDTO;
 
+import org.gt.Entity.PersonEntity;
 import org.gt.Entity.PetEntity;
+
 import org.gt.Repository.PetRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
 public class PetService {
     @Inject
     private PetRepository petRepository;
+    @Inject
+    private PersonService personService;
     @Transactional
-    public  boolean savePet(PetDTO pet) {
-        PetEntity newPet = new PetEntity();
-        if(petRepository.findByName(pet.getName())==null){
-            newPet.setName(pet.getName());
-            newPet.setRace(pet.getRace());
-            newPet.setAge(pet.getAge());
+    public  void savePet(PetEntity pet) {
 
-            petRepository.createPet(newPet);
-            return true;
+        PersonEntity personEntity = personService.findPersonByName(pet.getPerson().getName());
+        if(personEntity==null){
+            throw new IllegalArgumentException("the person does not exist");
         }
-
-        return false;
+        pet.setPerson(personEntity);
+        petRepository.persist(pet);
     }
 
-    public List<PetDTO> findAllPet() {
-        List<PetEntity> petEntityList = petRepository.allPet();
-        List<PetDTO> petTOList = new ArrayList<>();
-        for(PetEntity pet:petEntityList){
-            petTOList.add(convertEntityToEdo(pet));
-        }
-        return petTOList;
+    public List<PetEntity> findAllPet() {
+       return petRepository.listAll();
     }
-    public PetDTO findPetById(long id){
+    public PetEntity findPetById(long id){
         PetEntity petEntity = petRepository.findById(id);
 
         if(petEntity!=null){
 
-            return convertEntityToEdo(petEntity);
+            return petEntity;
         }
         return null;
     }
     @Transactional
     public boolean deletePet(Long id) {
         if(petRepository.findById(id)!=null){
-            petRepository.deletePet(id);
+            petRepository.deleteById(id);
             return true;
         }
         return false;
     }
     @Transactional
-    public boolean updatePet(long id,PetDTO petDTO) {
-        PetEntity petEntity = petRepository.findById(id);
-        if(petEntity!=null){
-            petRepository.updatePerson(petEntity,petDTO);
-            return true;
-        }
-        return false;
+    public Object updatePet(String  username,PetEntity petEntity) {
+        PetEntity updatePetEntity = petRepository.findByName(username);
+            if(!updatePetEntity.getName().equals(petEntity.getName()) && petEntity.getName()!=null){
+                if(petRepository.findByName(petEntity.getName())==null){
+                    updatePetEntity.setName(petEntity.getName());
+                }else{
+                    throw new IllegalArgumentException("pet name already exists");
+                }
+            }
+            if(petEntity.getRace()!=null){
+
+                updatePetEntity.setRace(petEntity.getRace());
+
+            }
+            Integer objetAge = petEntity.getAge();
+            if(objetAge!=null){
+
+                updatePetEntity.setAge(petEntity.getAge());
+
+            }
+            return "pet update successfully";
+
     }
-    private PetDTO convertEntityToEdo(PetEntity petEntity){
-        PetDTO petDTO = new PetDTO();
-        petDTO.setName(petEntity.getName());
-        petDTO.setRace(petEntity.getRace());
-        petDTO.setAge(petEntity.getAge());
-        return petDTO;
+    public PetEntity findPetByName(String name){
+        PetEntity getPetEntity = petRepository.findByName(name);
+        if(getPetEntity!=null){
+            return getPetEntity;
+        }
+        return null;
+    }
+    @Transactional
+    public void deletePetBYName(String name){
+        petRepository.delete("name",name);
     }
 }

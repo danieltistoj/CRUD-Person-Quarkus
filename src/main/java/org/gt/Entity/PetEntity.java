@@ -1,18 +1,24 @@
 package org.gt.Entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="Pet")
-public class PetEntity  extends PanacheEntity {
+public class PetEntity  {
+    @Id
+    @GeneratedValue
+    @JsonIgnore
+    private Long id;
     private String name;
     private String race;
     @Column(nullable = true)
     private int age;
-
+    @ManyToOne
+    @JoinColumn(name="personId")
+    @JsonBackReference
+    private PersonEntity person;
     public String getName() {
         return name;
     }
@@ -35,5 +41,13 @@ public class PetEntity  extends PanacheEntity {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonEntity person) {
+        this.person = person;
     }
 }
