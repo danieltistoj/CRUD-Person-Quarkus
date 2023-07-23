@@ -24,6 +24,9 @@ public class PersonService {
 
        return false;
     }
+    public PersonEntity findPersonByName(String name){
+        return personRepository.findByName(name);
+    }
 
     public List<PersonEntity> findAllPerson() {
         return personRepository.listAll();

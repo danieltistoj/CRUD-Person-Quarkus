@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 
 import org.gt.DTO.PetDTO;
 
+import org.gt.Entity.PersonEntity;
 import org.gt.Entity.PetEntity;
 
 import org.gt.Repository.PetRepository;
@@ -16,8 +17,16 @@ import java.util.List;
 public class PetService {
     @Inject
     private PetRepository petRepository;
+    @Inject
+    private PersonService personService;
     @Transactional
     public  void savePet(PetEntity pet) {
+
+        PersonEntity personEntity = personService.findPersonByName(pet.getPerson().getName());
+        if(personEntity==null){
+            throw new IllegalArgumentException("the person does not exist");
+        }
+        pet.setPerson(personEntity);
         petRepository.persist(pet);
     }
 

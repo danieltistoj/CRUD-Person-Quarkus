@@ -1,7 +1,7 @@
 package org.gt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,7 +15,10 @@ public class PetEntity  {
     private String race;
     @Column(nullable = true)
     private int age;
-
+    @ManyToOne
+    @JoinColumn(name="personId")
+    @JsonBackReference
+    private PersonEntity person;
     public String getName() {
         return name;
     }
@@ -38,5 +41,13 @@ public class PetEntity  {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonEntity person) {
+        this.person = person;
     }
 }

@@ -18,11 +18,5 @@ public class PersonRepository implements PanacheRepository <PersonEntity>{
     public  PersonEntity findByName(String name){
         return find("name",name).firstResult();
     }
-    @Transactional
-    public void updatePerson(PersonEntity updatePersonEntity,PersonEntity personEntity) {
-        updatePersonEntity.setName(personEntity.getName());
-        updatePersonEntity.setPhone(personEntity.getPhone());
-        updatePersonEntity.setDirection(personEntity.getDirection());
-        updatePersonEntity.setDate(personEntity.getDate());
-    }
+
 }

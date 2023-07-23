@@ -26,8 +26,12 @@ public class ControllerPet {
     @Path("/newPet")
     public Response newPet(PetEntity petEntity) {
         if( petService.findPetByName(petEntity.getName())==null){
-            petService.savePet(petEntity);
-            return Response.status(Response.Status.CREATED).entity("Pet created successfully").build();
+            try {
+                petService.savePet(petEntity);
+                return Response.status(Response.Status.CREATED).entity("Pet created successfully").build();
+            }catch (IllegalArgumentException ex){
+                return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            }
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet already exists").build();
     }
