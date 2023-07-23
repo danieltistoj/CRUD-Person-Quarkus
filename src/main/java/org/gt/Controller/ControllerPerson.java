@@ -64,6 +64,13 @@ public class ControllerPerson {
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
     }
-
-
+    @GET
+    @Path("/findPersonByName/{name}")
+    public Response findPersonByName(@PathParam("name") String name){
+        PersonEntity personEntity = personService.findPersonByName(name);
+        if(personEntity!=null){
+            return Response.status(Response.Status.OK).entity(personEntity).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
+    }
 }
