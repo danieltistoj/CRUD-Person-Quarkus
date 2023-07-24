@@ -11,19 +11,15 @@ import org.gt.Service.PetService;
 
 import java.util.List;
 
-@Path("/pet")
+@Path("/pets")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ControllerPet {
     @Inject
     private PetService petService;
-    @GET
-    @Path("/")
-    public String hello(){
-        return "Pet";
-    }
+
     @POST
-    @Path("/newPet")
+    @Path("/")
     public Response newPet(PetEntity petEntity) {
         if( petService.findPetByName(petEntity.getName())==null){
             try {
@@ -36,12 +32,12 @@ public class ControllerPet {
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet already exists").build();
     }
     @GET
-    @Path("/getAll")
+    @Path("/")
     public List<PetEntity> allPet(){
         return petService.findAllPet();
     }
     @GET
-    @Path("/OnePetById/{id}")
+    @Path("/{id}")
     public Response onePetById(@PathParam("id") Long id){
 
         PetEntity petEntity = petService.findPetById(id);
@@ -51,7 +47,7 @@ public class ControllerPet {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
     @DELETE
-    @Path("/deletePet/{id}")
+    @Path("/{id}")
     public Response deletePet(@PathParam("id") Long id) {
         if(petService.deletePet(id)){
             return Response.status(Response.Status.OK).entity("Pet deleted successfully").build();
@@ -59,7 +55,7 @@ public class ControllerPet {
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet does not exist").build();
     }
     @DELETE
-    @Path("/deletePetByName/{name}")
+    @Path("/{name}")
     public Response deletePetByName(@PathParam("name") String name){
         if(petService.findPetByName(name)!=null){
             petService.deletePetBYName(name);
@@ -68,7 +64,7 @@ public class ControllerPet {
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet does not exist").build();
     }
     @PUT
-    @Path("/updatePet/{name}")
+    @Path("/{name}")
     public Response updatePet(@PathParam("name") String name,PetEntity petEntity) {
         if(petService.findPetByName(name)!=null){
             try {
@@ -81,7 +77,7 @@ public class ControllerPet {
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet does not exist").build();
     }
     @GET
-    @Path("/findPetByName/{name}")
+    @Path("/{name}")
     public Response findPetByName(@PathParam("name") String name){
         PetEntity petEntity = petService.findPetByName(name);
         if(petEntity!=null){

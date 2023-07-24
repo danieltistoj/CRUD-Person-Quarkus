@@ -45,9 +45,12 @@ public class PersonService {
     @Transactional
     public boolean updatePerson(long id,PersonEntity personEntity) {
         PersonEntity updatePersonEntity = personRepository.findById(id);
-        if(personEntity!=null){
+      //  System.out.println(personEntity.getName());
+        if(updatePersonEntity!=null){
             if(personEntity.getName()!=null){
+
                 updatePersonEntity.setName(personEntity.getName());
+
             }
             if(personEntity.getDate()!=null){
                 updatePersonEntity.setDate(personEntity.getDate());

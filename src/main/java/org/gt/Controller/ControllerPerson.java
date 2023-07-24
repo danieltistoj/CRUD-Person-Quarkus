@@ -1,12 +1,14 @@
 package org.gt.Controller;
 
 
+import io.vertx.core.json.pointer.JsonPointerIterator;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 
+import org.gt.DTO.DateTimeResponseDTO;
 import org.gt.Entity.PersonEntity;
 import org.gt.Service.PersonService;
 
@@ -15,62 +17,93 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 
-@Path("/person")
+@Path("/people")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ControllerPerson {
     @Inject
     private PersonService personService;
+
+    @POST
+    @Path("/")
+    public Response newPerson(PersonEntity person) {
+        DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
+        if( personService.savePerson(person)){
+         return Response.status(Response.Status.CREATED).entity(person).build();
+        }
+
+        responseDTO.TimeDate();
+        responseDTO.setStatusCode(Response.Status.BAD_REQUEST.getStatusCode());
+        responseDTO.setMessage("The person already exists");
+
+        return Response.status(Response.Status.BAD_REQUEST).entity(responseDTO).build();
+    }
     @GET
     @Path("/")
-    public String hello(){
-        return "Person";
-    }
-    @POST
-    @Path("/newPerson")
-    public Response newPerson(PersonEntity person) {
-        if( personService.savePerson(person)){
-         return Response.status(Response.Status.CREATED).entity("Person created successfully").build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).entity("The person already exists").build();
-    }
-    @GET
-    @Path("/getAll")
     public List<PersonEntity> allPerson(){
         return personService.findAllPerson();
     }
     @GET
-    @Path("/OnePersonById/{id}")
+    @Path("/{id}")
     public Response onePersonById(@PathParam("id") Long id){
+        DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
         PersonEntity personEntity = personService.findPersonById(id);
         if(personEntity!=null){
             return Response.ok(personEntity).build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        responseDTO.TimeDate();
+        responseDTO.setMessage("The person does not exist");
+        responseDTO.setStatusCode(Response.Status.NOT_FOUND.getStatusCode());
+
+        return Response.status(Response.Status.NOT_FOUND).entity(responseDTO).build();
     }
     @DELETE
-    @Path("/deletePerson/{id}")
+    @Path("/{id}")
     public Response deletePerson(@PathParam("id") Long id) {
+        DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
+        responseDTO.TimeDate();
         if(personService.deletePersona(id)){
-            return Response.status(Response.Status.OK).entity("Deleted person").build();
+
+            responseDTO.setMessage("Deleted person");
+            responseDTO.setStatusCode(Response.Status.OK.getStatusCode());
+            return Response.status(Response.Status.OK).entity(responseDTO).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
+
+
+        responseDTO.setMessage("The person does not exist");
+        responseDTO.setStatusCode(Response.Status.NOT_FOUND.getStatusCode());
+
+        return Response.status(Response.Status.NO_CONTENT).entity(responseDTO).build();
     }
     @PUT
-    @Path("/updatePerson/{id}")
+    @Path("/{id}")
     public Response updatePersona(@PathParam("id") Long id,PersonEntity personEntity) {
+        DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
         if(personService.updatePerson(id,personEntity)){
-            return Response.status(Response.Status.OK).entity("Update person").build();
+
+            PersonEntity updatePersonEntity = personService.findPersonById(id);
+            return Response.ok(updatePersonEntity).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
+
+
+        responseDTO.TimeDate();
+        responseDTO.setMessage("The person does not exist");
+        responseDTO.setStatusCode(Response.Status.NOT_FOUND.getStatusCode());
+
+        return Response.status(Response.Status.NO_CONTENT).entity(responseDTO).build();
     }
     @GET
-    @Path("/findPersonByName/{name}")
+    @Path("/{name}")
     public Response findPersonByName(@PathParam("name") String name){
         PersonEntity personEntity = personService.findPersonByName(name);
         if(personEntity!=null){
             return Response.status(Response.Status.OK).entity(personEntity).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("The person does not exist").build();
+        DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
+        responseDTO.TimeDate();
+        responseDTO.setMessage("The person does not exist");
+        responseDTO.setStatusCode(Response.Status.NOT_FOUND.getStatusCode());
+
+        return Response.status(Response.Status.NOT_FOUND).entity(responseDTO).build();
     }
 }

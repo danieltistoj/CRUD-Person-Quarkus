@@ -11,7 +11,7 @@ import org.gt.Service.UserService;
 
 import java.util.List;
 
-@Path("/user")
+@Path("/users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ControllerUser {
@@ -40,12 +40,12 @@ public class ControllerUser {
      return Response.status(Response.Status.BAD_REQUEST).entity("The user already exists, try another username or email").build();
     }
     @GET
-    @Path("/allUsers")
+    @Path("/")
     public List<UserEntity> allUsers(){
         return userService.allUser();
     }
     @GET
-    @Path("/findUserByUserName/{username}")
+    @Path("/{username}")
     public Response findUserByName(@PathParam("username") String name){
         UserEntity userEntity = userService.findUserByName(name);
         if(userEntity!=null){
@@ -54,7 +54,7 @@ public class ControllerUser {
         return Response.status(Response.Status.BAD_REQUEST).entity("Username does not exist").build();
     }
     @PUT
-    @Path("/updateUser/{username}")
+    @Path("/{username}")
     public Response updateUser(@PathParam("username") String name,UserEntity userEntity){
         if(userService.findUserByName(name)!=null){
 
