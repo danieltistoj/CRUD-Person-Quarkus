@@ -1,12 +1,15 @@
 package org.gt.Service;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
 import org.gt.DTO.PersonDTO;
-import org.gt.Entity.PersonEntity;
+import org.gt.Entity.*;
 import org.gt.Repository.PersonRepository;
+import org.gt.Repository.PetRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,8 @@ import java.util.List;
 public class PersonService {
     @Inject
     private PersonRepository personRepository;
+    @Inject
+    private PetRepository petRepository;
     @Transactional
     public  boolean savePerson(PersonEntity person) {
 
@@ -25,7 +30,9 @@ public class PersonService {
        return false;
     }
     public PersonEntity findPersonByName(String name){
-        return personRepository.findByName(name);
+
+        PersonEntity personEntity = personRepository.findByName(name);
+        return personEntity;
     }
 
     public List<PersonEntity> findAllPerson() {
@@ -45,9 +52,12 @@ public class PersonService {
     @Transactional
     public boolean updatePerson(long id,PersonEntity personEntity) {
         PersonEntity updatePersonEntity = personRepository.findById(id);
-        if(personEntity!=null){
+      //  System.out.println(personEntity.getName());
+        if(updatePersonEntity!=null){
             if(personEntity.getName()!=null){
+
                 updatePersonEntity.setName(personEntity.getName());
+
             }
             if(personEntity.getDate()!=null){
                 updatePersonEntity.setDate(personEntity.getDate());
@@ -61,6 +71,15 @@ public class PersonService {
             return true;
         }
         return false;
+    }
+    public PersonDTO convertEntityToDTO(PersonEntity personEntity){
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setName(personEntity.getName());
+        personDTO.setDate(personEntity.getDate());
+        personDTO.setDirection(personEntity.getDirection());
+        personDTO.setPhone(personEntity.getPhone());
+        personDTO.setPets(personEntity.getPets());
+        return personDTO;
     }
 
 }
