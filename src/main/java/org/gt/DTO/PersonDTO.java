@@ -1,5 +1,11 @@
 package org.gt.DTO;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.gt.Entity.PetEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class PersonDTO {
     private String name;
     private String date;
@@ -7,6 +13,7 @@ public class PersonDTO {
     private String direction;
 
     private String phone;
+    private List<PetEntity> pets = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -38,5 +45,13 @@ public class PersonDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<PetEntity> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<PetEntity> pets) {
+        this.pets = pets;
     }
 }

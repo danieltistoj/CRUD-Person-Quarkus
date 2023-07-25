@@ -1,6 +1,7 @@
 package org.gt.Controller;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.vertx.core.json.pointer.JsonPointerIterator;
 import jakarta.inject.Inject;
 
@@ -9,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 
 
 import org.gt.DTO.DateTimeResponseDTO;
+import org.gt.DTO.PersonDTO;
 import org.gt.Entity.PersonEntity;
 import org.gt.Service.PersonService;
 
@@ -93,11 +95,20 @@ public class ControllerPerson {
         return Response.status(Response.Status.NO_CONTENT).entity(responseDTO).build();
     }
     @GET
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     @Path("/{name}")
     public Response findPersonByName(@PathParam("name") String name){
-        PersonEntity personEntity = personService.findPersonByName(name);
+        PersonEntity personEntity;
+        try {
+            long id = Long.parseLong(name);
+             personEntity = personService.findPersonById(id);
+        }catch (Exception ex){
+            personEntity = personService.findPersonByName(name);
+        }
+
         if(personEntity!=null){
-            return Response.status(Response.Status.OK).entity(personEntity).build();
+            PersonDTO personDTO = personService.convertEntityToDTO(personEntity);
+            return Response.status(Response.Status.OK).entity(personDTO).build();
         }
         DateTimeResponseDTO responseDTO = new DateTimeResponseDTO();
         responseDTO.TimeDate();

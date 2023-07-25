@@ -1,5 +1,6 @@
 package org.gt.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,6 +19,7 @@ public class PersonEntity{
     private Long id;
     private String name;
     private String date;
+    @JsonIgnore
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<PetEntity> pets = new ArrayList<>();
