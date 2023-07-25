@@ -43,13 +43,13 @@
 
 ### Get One Person by ID
 
-- **URL**: `http://localhost:8080/person/OnePersonById/{{id}}`
+- **URL**: `http://localhost:8080/people/{{id}}`
 - **Method**: GET
 - **Description**: Gets information about a specific person by their ID.
 
 ### Add New Person
 
-- **URL**: `http://localhost:8080/person/newPerson`
+- **URL**: `http://localhost:8080/people`
 - **Method**: POST
 - **Description**: Creates a new person with the provided details.
 - **Body**:
@@ -64,7 +64,7 @@
 
 ### Update Person
 
-- **URL**: `http://localhost:8080/person/updatePerson/{{id}}`
+- **URL**: `http://localhost:8080/people/{{id}}`
 - **Method**: PUT
 - **Description**: Updates the information of an existing person based on their ID.
 - **Body**:
@@ -78,13 +78,13 @@
 ```
 ### Get All Persons
 
-- **URL**: `http://localhost:8080/person/getAll`
+- **URL**: `http://localhost:8080/people`
 - **Method**: GET
 - **Description**: Retrieves information about all available persons.
 
 ### Delete Person
 
-- **URL**: `http://localhost:8080/person/deletePerson/{{id}}`
+- **URL**: `http://localhost:8080/people/{{id}}`
 - **Method**: DELETE
 - **Description**: Deletes a person with the specified ID.
 
@@ -92,13 +92,13 @@
 
 ### Get One Pet by ID
 
-- **URL**: `http://localhost:8080/pet/OnePetById/{{id}}`
+- **URL**: `http://localhost:8080/pets/{{id}}`
 - **Method**: GET
 - **Description**: Gets information about a specific pet by their ID.
 
 ### Add New Pet
 
-- **URL**: `http://localhost:8080/pet/newPet`
+- **URL**: `http://localhost:8080/pets`
 - **Method**: POST
 - **Description**: Adds a new pet with the provided details.
 - **Body**:
@@ -113,7 +113,7 @@
 
 ### Update Pet
 
-- **URL**: `http://localhost:8080/pet/updatePet/{{id}}`
+- **URL**: `http://localhost:8080/pets/{{id}}`
 - **Method**: PUT
 - **Description**: Updates the information of an existing pet based on their ID.
 - **Body**:
@@ -127,13 +127,13 @@
 
 ### Get All Pets
 
-- **URL**: `http://localhost:8080/pet/getAll`
+- **URL**: `http://localhost:8080/pets`
 - **Method**: GET
 - **Description**: Retrieves information about all available pets.
 
 ### Delete Pet
 
-- **URL**: `http://localhost:8080/pet/deletePet/{{id}}`
+- **URL**: `http://localhost:8080/pets/{{id}}`
 - **Method**: DELETE
 - **Description**: Deletes a pet with the specified ID.
 
@@ -141,7 +141,7 @@
 
 ### Sign In
 
-- **URL**: `http://localhost:8080/user/SignIn`
+- **URL**: `http://localhost:8080/users/SignIn`
 - **Method**: POST
 - **Description**: Signs in the user with the provided credentials.
 - **Body**:
@@ -155,7 +155,7 @@
 
 ### Log In
 
-- **URL**: `http://localhost:8080/user/LogIn`
+- **URL**: `http://localhost:8080/users/LogIn`
 - **Method**: POST
 - **Description**: Logs in the user with the provided credentials.
 - **Body**:
