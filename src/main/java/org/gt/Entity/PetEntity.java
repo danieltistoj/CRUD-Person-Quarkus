@@ -19,6 +19,7 @@ public class PetEntity  {
     @JoinColumn(name="personId")
     @JsonBackReference
     private PersonEntity person;
+    private String imageUrl;
     public String getName() {
         return name;
     }
@@ -49,5 +50,13 @@ public class PetEntity  {
 
     public void setPerson(PersonEntity person) {
         this.person = person;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

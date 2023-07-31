@@ -9,7 +9,18 @@ import jakarta.ws.rs.core.Response;
 import org.gt.Entity.PetEntity;
 import org.gt.Service.PetService;
 
+
+import org.jboss.resteasy.reactive.server.core.multipart.FormData;
+import org.jboss.resteasy.reactive.server.multipart.FormValue;
+import org.jboss.resteasy.reactive.server.multipart.MultipartFormDataInput;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Path("/pets")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -84,6 +95,16 @@ public class ControllerPet {
             return Response.status(Response.Status.OK).entity(petEntity).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet does not exist").build();
+    }
+    @POST
+    @Path("/upload/{name}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImage(@PathParam("name") String name, MultipartFormDataInput input) throws IOException {
+        String urlImage = petService.uploadImage(name,input);
+        if(urlImage!=null){
+            return Response.ok(urlImage).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("Image not found").build();
     }
 
 }
