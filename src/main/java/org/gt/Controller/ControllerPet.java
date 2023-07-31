@@ -100,11 +100,28 @@ public class ControllerPet {
     @Path("/upload/{name}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("name") String name, MultipartFormDataInput input) throws IOException {
-        String urlImage = petService.uploadImage(name,input);
-        if(urlImage!=null){
-            return Response.ok(urlImage).build();
+        Map<?,?> result = petService.uploadImage(name,input);
+        if(result!=null){
+            return Response.ok(result).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("Image not found").build();
+    }
+    @GET
+    @Path("/upload/{name}")
+
+    public Response getImagePet(@PathParam("name")String name) throws Exception {
+        PetEntity petEntity = petService.findPetByName(name);
+        if(petEntity!=null){
+            if(petEntity.getImageUrl()!=null){
+                Response.ResponseBuilder responseBuilder = Response.ok(petService.getImagePet(petEntity));
+                responseBuilder.header("Content-Disposition", "inline; filename="+petEntity.getName()+".jpg");
+                responseBuilder.header("Content-Type", "image/jpeg"); // Puedes ajustar el Content-Type según el tipo de imagen
+
+                return responseBuilder.build();
+            }
+            return Response.status(Response.Status.BAD_REQUEST).entity("the pet does not have a related image").build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).entity("The pet does not exist").build();
     }
 
 }

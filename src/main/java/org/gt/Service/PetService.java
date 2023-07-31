@@ -19,8 +19,10 @@ import org.jboss.resteasy.reactive.server.multipart.FormValue;
 import org.jboss.resteasy.reactive.server.multipart.MultipartFormDataInput;
 
 
+import javax.swing.plaf.UIResource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -102,7 +104,7 @@ public class PetService {
         petRepository.delete("name",name);
     }
     @Transactional
-    public String uploadImage(String name,MultipartFormDataInput input) throws IOException {
+    public Map uploadImage(String name,MultipartFormDataInput input) throws IOException {
         PetEntity petEntity = findPetByName(name);
 
         Map<String, Collection<FormValue>> formDataMap = input.getValues();
@@ -125,6 +127,11 @@ public class PetService {
         String imageUrl = (String) result.get("url");
 
         petEntity.setImageUrl(imageUrl);
-        return imageUrl;
+        return result;
+    }
+    public InputStream getImagePet(PetEntity petEntity) throws Exception {
+
+        InputStream inputStream = new URL(petEntity.getImageUrl()).openStream();
+        return inputStream;
     }
 }
