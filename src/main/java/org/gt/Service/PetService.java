@@ -2,24 +2,23 @@ package org.gt.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import io.netty.util.internal.ObjectUtil;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import jakarta.transaction.Transactional;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
-import org.gt.DTO.PetDTO;
+
 
 import org.gt.Entity.PersonEntity;
 import org.gt.Entity.PetEntity;
 
 import org.gt.Repository.PetRepository;
+import org.gt.Tools.CloudinaryConnection;
 import org.jboss.resteasy.reactive.server.multipart.FormValue;
 import org.jboss.resteasy.reactive.server.multipart.MultipartFormDataInput;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,9 +34,6 @@ public class PetService {
     @Inject
     private PersonService personService;
 
-    private String cloudName;
-    private String apiKey;
-    private String apiSecret;
 
     @Transactional
     public  void savePet(PetEntity pet) {
@@ -123,7 +119,7 @@ public class PetService {
         InputStream inputStream = data.getFileItem().getInputStream();
         byte[] imageBytes = inputStream.readAllBytes();
 
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap());
+        Cloudinary cloudinary = CloudinaryConnection.getInstance();
 
         Map<?,?> result = cloudinary.uploader().upload(imageBytes, ObjectUtils.asMap("public_id", petEntity.getName()));
         String imageUrl = (String) result.get("url");
