@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import io.netty.util.internal.ObjectUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
 import jakarta.transaction.Transactional;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -33,6 +34,11 @@ public class PetService {
     private PetRepository petRepository;
     @Inject
     private PersonService personService;
+
+    private String cloudName;
+    private String apiKey;
+    private String apiSecret;
+
     @Transactional
     public  void savePet(PetEntity pet) {
 
@@ -117,12 +123,9 @@ public class PetService {
         InputStream inputStream = data.getFileItem().getInputStream();
         byte[] imageBytes = inputStream.readAllBytes();
 
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "djbbxokgf",
-                "api_key", "918916159641163",
-                "api_secret", "Oy_VXRVpAnyfUnJyiPWQ4rRLhgU",
-                "secure", true));
-        Map<?,?> result = cloudinary.uploader().upload(imageBytes, ObjectUtils.emptyMap());
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap());
+
+        Map<?,?> result = cloudinary.uploader().upload(imageBytes, ObjectUtils.asMap("public_id", petEntity.getName()));
         String imageUrl = (String) result.get("url");
 
         petEntity.setImageUrl(imageUrl);

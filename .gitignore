@@ -6,7 +6,7 @@ pom.xml.versionsBackup
 release.properties
 .flattened-pom.
 
-application.properties
+/application.properties
 
 # Eclipse
 .project
