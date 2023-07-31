@@ -1,17 +1,33 @@
 package org.gt.Service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
 import jakarta.transaction.Transactional;
 
-import org.gt.DTO.PetDTO;
+
 
 import org.gt.Entity.PersonEntity;
 import org.gt.Entity.PetEntity;
 
 import org.gt.Repository.PetRepository;
+import org.gt.Tools.CloudinaryConnection;
+import org.jboss.resteasy.reactive.server.multipart.FormValue;
+import org.jboss.resteasy.reactive.server.multipart.MultipartFormDataInput;
 
+
+import javax.swing.plaf.UIResource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 
 @ApplicationScoped
 public class PetService {
@@ -19,6 +35,8 @@ public class PetService {
     private PetRepository petRepository;
     @Inject
     private PersonService personService;
+
+
     @Transactional
     public  void savePet(PetEntity pet) {
 
@@ -84,5 +102,36 @@ public class PetService {
     @Transactional
     public void deletePetBYName(String name){
         petRepository.delete("name",name);
+    }
+    @Transactional
+    public Map uploadImage(String name,MultipartFormDataInput input) throws IOException {
+        PetEntity petEntity = findPetByName(name);
+
+        Map<String, Collection<FormValue>> formDataMap = input.getValues();
+        Collection<FormValue> imageParts = formDataMap.get("image");
+
+        List<FormValue> listFormValues = new ArrayList<>(imageParts);
+
+        if(imageParts == null || imageParts.isEmpty()){
+            return null;
+        }
+
+        FormValue data = listFormValues.get(0);
+
+        InputStream inputStream = data.getFileItem().getInputStream();
+        byte[] imageBytes = inputStream.readAllBytes();
+
+        Cloudinary cloudinary = CloudinaryConnection.getInstance();
+
+        Map<?,?> result = cloudinary.uploader().upload(imageBytes, ObjectUtils.asMap("public_id", petEntity.getName()));
+        String imageUrl = (String) result.get("url");
+
+        petEntity.setImageUrl(imageUrl);
+        return result;
+    }
+    public InputStream getImagePet(PetEntity petEntity) throws Exception {
+
+        InputStream inputStream = new URL(petEntity.getImageUrl()).openStream();
+        return inputStream;
     }
 }

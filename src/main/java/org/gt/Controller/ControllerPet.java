@@ -9,7 +9,18 @@ import jakarta.ws.rs.core.Response;
 import org.gt.Entity.PetEntity;
 import org.gt.Service.PetService;
 
+
+import org.jboss.resteasy.reactive.server.core.multipart.FormData;
+import org.jboss.resteasy.reactive.server.multipart.FormValue;
+import org.jboss.resteasy.reactive.server.multipart.MultipartFormDataInput;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Path("/pets")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -84,6 +95,33 @@ public class ControllerPet {
             return Response.status(Response.Status.OK).entity(petEntity).build();
         }
         return Response.status(Response.Status.BAD_REQUEST).entity("The pet does not exist").build();
+    }
+    @POST
+    @Path("/upload/{name}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImage(@PathParam("name") String name, MultipartFormDataInput input) throws IOException {
+        Map<?,?> result = petService.uploadImage(name,input);
+        if(result!=null){
+            return Response.ok(result).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("Image not found").build();
+    }
+    @GET
+    @Path("/upload/{name}")
+
+    public Response getImagePet(@PathParam("name")String name) throws Exception {
+        PetEntity petEntity = petService.findPetByName(name);
+        if(petEntity!=null){
+            if(petEntity.getImageUrl()!=null){
+                Response.ResponseBuilder responseBuilder = Response.ok(petService.getImagePet(petEntity));
+                responseBuilder.header("Content-Disposition", "inline; filename="+petEntity.getName()+".jpg");
+                responseBuilder.header("Content-Type", "image/jpeg"); // Puedes ajustar el Content-Type según el tipo de imagen
+
+                return responseBuilder.build();
+            }
+            return Response.status(Response.Status.BAD_REQUEST).entity("the pet does not have a related image").build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).entity("The pet does not exist").build();
     }
 
 }
