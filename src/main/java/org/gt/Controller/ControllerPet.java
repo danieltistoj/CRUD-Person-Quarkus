@@ -115,7 +115,7 @@ public class ControllerPet {
             if(petEntity.getImageUrl()!=null){
                 Response.ResponseBuilder responseBuilder = Response.ok(petService.getImagePet(petEntity));
                 responseBuilder.header("Content-Disposition", "inline; filename="+petEntity.getName()+".jpg");
-                responseBuilder.header("Content-Type", "image/jpeg"); // Puedes ajustar el Content-Type según el tipo de imagen
+                responseBuilder.header("Content-Type", "image/jpeg");
 
                 return responseBuilder.build();
             }
